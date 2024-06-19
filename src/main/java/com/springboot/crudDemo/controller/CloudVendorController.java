@@ -2,6 +2,8 @@ package com.springboot.crudDemo.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.crudDemo.model.CloudVendor;
+import com.springboot.crudDemo.response.ResponseHandler;
 import com.springboot.crudDemo.service.CloudVendorService;
 
 @RestController
@@ -25,8 +28,10 @@ public class CloudVendorController {
 	}
 	
 	@GetMapping("/{vendorId}")
-	public CloudVendor getCloudVendorDetails(@PathVariable("vendorId") String vendorId) {
-		return cloudvendorservice.getVendor(vendorId);
+	public ResponseEntity<Object> getCloudVendorDetails(@PathVariable("vendorId") String vendorId) {
+		//return cloudvendorservice.getVendor(vendorId);
+		
+		return ResponseHandler.responseBuilder("Requested Vendor", HttpStatus.OK, cloudvendorservice.getVendor(vendorId));
 	}
 	
 	@GetMapping("/")
